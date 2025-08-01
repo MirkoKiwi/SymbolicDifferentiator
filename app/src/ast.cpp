@@ -133,7 +133,7 @@ Complex FuncNode::eval(const Complex &x) const {
     if ( name == "cos" )  return std::cos(v);
     if ( name == "tan" )  return std::tan(v);
     if ( name == "cot" )  return Complex(1.0) / std::tan(v);
-    if ( name == "log" )  return std::log(v);    // Custom log func
+    if ( name == "log" )  return std::log(v);
     
     throw std::runtime_error("Unknown func: " + name);
 }
