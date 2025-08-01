@@ -11,7 +11,7 @@ CXXFLAGS = -std=c++17 -Wall -g
 INCLUDES = -Iinclude
 
 # App name
-TARGET = differentiator
+TARGET = differentiate
 
 # List of all sources 
 SRCS = main.cpp src/ast.cpp src/parser.cpp src/differentiator.cpp

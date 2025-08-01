@@ -81,9 +81,62 @@
 #include "differentiator.hpp"
 
 
-// TODO: take as argument a math function and a complex point
+
+void printUsage();
+
+
 int main(int argc, char *argv[]) {
-    // Test points
+    // Expected: (program, expr, real) or (program, expr, real, imag).
+    if ( argc != 3 && argc != 4 ) {
+        printUsage();
+        return 1;
+    }
+
+    try {
+        std::string mathExpr = argv[1];
+
+        long double real = std::stold(argv[2]);
+        long double imag = (argc == 4) ? std::stold(argv[3]) : 0.0; 
+
+        Complex z(real, imag);
+
+
+        std::cout << "Function: f(x) = " << mathExpr << std::endl;
+        std::cout << "Point:    z    = " << z << std::endl;
+        std::cout << "------------------------------------" << std::endl;
+
+        auto [f, f1, f2] = differentiate(mathExpr);
+        
+        // Evaluate and print
+        std::cout << "f(z)   = " << f(z) << std::endl;
+        std::cout << "f'(z)  = " << f1(z) << std::endl;
+        std::cout << "f''(z) = " << f2(z) << std::endl;
+    }
+    catch (const std::invalid_argument &e) {
+        std::cerr << "Error: Invalid number format for the point. Please provide valid numbers." << std::endl;
+        printUsage();
+        return 1;
+    }
+    catch (const std::runtime_error &e) {
+        std::cerr << "An error occurred: " << e.what() << std::endl;
+        return 1;
+    }
+
+    return 0;
+}
+
+
+
+void printUsage() {
+    std::cerr << "Usage:\n"
+              << "  ./differentiate <\"expression\"> <real_part>\n"
+              << "  ./differentiate <\"expression\"> <real_part> <imag_part>\n\n";
+}
+
+
+
+/*
+// Test points
     Complex z(2, 2);
     Complex z1(1.63, -2.11);
     Complex z2(1, 0);
@@ -166,6 +219,4 @@ int main(int argc, char *argv[]) {
         
         std::cout << std::string(40, '-') << std::endl;
     }
-
-    return 0;
-}
+*/
